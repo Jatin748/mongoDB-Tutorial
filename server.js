@@ -39,8 +39,17 @@ const db = require('./db');
 require('dotenv').config();
 
 const app = express();
-
 app.use(express.json());
+
+const logRequest = (req, res, next) => {
+    console.log(`Request made at: [${new Date().toLocaleString()}] to [${req.originalUrl}]`);
+    next(); // Moving to next phase of the middleware
+};
+app.use(logRequest);
+
+app.get('/', function (req, res) {
+    res.send("Hello World");
+});
 
 const personRoutes = require('./routes/personRoutes');
 app.use('/person', personRoutes);

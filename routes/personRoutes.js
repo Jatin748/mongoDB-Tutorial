@@ -24,7 +24,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
 router.get('/:work', async (req, res) => {
     try {
         const validWorkType = person.schema.path('work').enumValues;
