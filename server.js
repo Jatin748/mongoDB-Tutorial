@@ -37,9 +37,11 @@ const express = require('express');
 const db = require('./db');
 // const bodyParser = require('body-parser');
 require('dotenv').config();
+const passport = require('./auth');
 
 const app = express();
 app.use(express.json());
+app.use(passport.initialize());
 
 const logRequest = (req, res, next) => {
     console.log(`Request made at: [${new Date().toLocaleString()}] to [${req.originalUrl}]`);
@@ -47,12 +49,14 @@ const logRequest = (req, res, next) => {
 };
 app.use(logRequest);
 
+const localAuthenticator = passport.authenticate('local', { session: false });
+
 app.get('/', function (req, res) {
     res.send("Hello World");
 });
 
 const personRoutes = require('./routes/personRoutes');
-app.use('/person', personRoutes);
+app.use('/person', localAuthenticator, personRoutes);
 
 const menuRoutes = require('./routes/menuRoutes');
 app.use('/menu', menuRoutes);
