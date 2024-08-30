@@ -42,10 +42,6 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', function (req, res) {
-    res.send("Hello World!");
-});
-
 const personRoutes = require('./routes/personRoutes');
 app.use('/person', personRoutes);
 
