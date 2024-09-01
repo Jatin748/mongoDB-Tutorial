@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const data = await person.find();
-        console.log(data);
+        // console.log(data);
         res.status(200).json(data);
     } catch (err) {
         console.log(err);
@@ -30,7 +30,7 @@ router.get('/:work', async (req, res) => {
         const workType = req.params.work.toLowerCase();
         if (validWorkType.includes(workType)) {
             const data = await person.find({ work: workType });
-            console.log(data);
+            // console.log(data);
             res.status(200).json(data);
         } else {
             res.status(404).json({ error: "Invalid Work Type" });
@@ -43,7 +43,6 @@ router.get('/:work', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-
         const personId = req.params.id;
         const updatedPersonData = req.body;
         const response = await person.findByIdAndUpdate(personId, updatedPersonData, {
@@ -60,8 +59,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        const personId = req.params.id;
-        const response = await person.findByIdAndDelete(personId);
+        const response = await person.findByIdAndDelete(req.params.id);
         if (!response) {
             return res.status(404).json({ error: "Person Not Found" });
         } else {
