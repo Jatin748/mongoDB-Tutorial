@@ -49,14 +49,14 @@ const logRequest = (req, res, next) => {
 };
 app.use(logRequest);
 
-const localAuthenticator = passport.authenticate('local', { session: false });
+const localAuthenticator = passport.authenticate('local', { session: false }); // username and password based authentication
 
 app.get('/', function (req, res) {
     res.send("Hello World");
 });
 
 const personRoutes = require('./routes/personRoutes');
-app.use('/person', localAuthenticator, personRoutes);
+app.use('/person', personRoutes);
 
 const menuRoutes = require('./routes/menuRoutes');
 app.use('/menu', menuRoutes);
